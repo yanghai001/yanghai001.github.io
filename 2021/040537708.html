@@ -4,7 +4,7 @@
 
 <head>
     <meta charset="utf-8">
-    <meta name="keywords" content="Hello World, 瘦死的骆驼">
+    <meta name="keywords" content="笔记：站点部署记录, 瘦死的骆驼">
     <meta name="description" content="">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
@@ -16,7 +16,7 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
 
 
-    <title>Hello World | 瘦死的骆驼</title>
+    <title>笔记：站点部署记录 | 瘦死的骆驼</title>
     <link rel="icon" type="image/png" href="/favicon.png">
 
     <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
@@ -203,12 +203,12 @@
 
 
 
-<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/12.jpg')">
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/3.jpg')">
     <div class="container" style="right: 0px;left: 0px;">
         <div class="row">
             <div class="col s12 m12 l12">
                 <div class="brand">
-                    <h1 class="description center-align post-title">Hello World</h1>
+                    <h1 class="description center-align post-title">笔记：站点部署记录</h1>
                 </div>
             </div>
         </div>
@@ -322,12 +322,25 @@
             <div class="row tag-cate">
                 <div class="col s7">
                     
-                          <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
-                          </div>
+                    <div class="article-tag">
+                        
+                            <a href="/tags/hexo-blog-github-nodejs/">
+                                <span class="chip bg-color">-hexo -blog -github -nodejs</span>
+                            </a>
+                        
+                    </div>
                     
                 </div>
                 <div class="col s5 right-align">
+                    
+                    <div class="post-cate">
+                        <i class="fas fa-bookmark fa-fw icon-category"></i>
+                        
+                            <a href="/categories/hexo/" class="post-category">
+                                hexo
+                            </a>
+                        
+                    </div>
                     
                 </div>
             </div>
@@ -367,19 +380,16 @@
 
         <div class="card-content article-card-content">
             <div id="articleContent">
-                <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
+                <p>本来打算使用django部署一个属于自己的站点，奈何在腾讯云上部署站点一直不成功，然后发现了nodejs+hexo+github快速部署自己的博客站点的方法，后续再看看能不能扩展其他功能，比如书籍、音乐、视频推荐等。</p>
+<p>以下记录本站点部署的过程。</p>
+<hr>
+<h3 id="环境准备"><a href="#环境准备" class="headerlink" title="环境准备"></a>环境准备</h3><p><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1je41147Ma?p=2">github+nodejs+git环境安装</a><br>1.github注册账号，并创建一个仓库，仓库的命名是：(你的用户名).github.io,如yanghai001.github.io<br>2.下载安装nodejs,参考教程：<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43285335/article/details/90696126">nodejs下载安装及配置环境</a><br>3.下载安装git,参考教程：<a target="_blank" rel="noopener" href="https://www.cnblogs.com/xueweisuoyong/p/11914045.html">Windows系统Git安装教程（详解Git安装过程）</a></p>
+<h3 id="使用hexo创建和部署网站"><a href="#使用hexo创建和部署网站" class="headerlink" title="使用hexo创建和部署网站"></a>使用hexo创建和部署网站</h3><p><a target="_blank" rel="noopener" href="https://hexoscript.gitbook.io/hexo-script/v/1.3-1/shi-yong-bu-zhou/yi-jian-bu-shu-hexo-bo-ke">hexo快速创建和部署网站（按步骤进行）</a>，参照视频教程：<br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1je41147Ma?p=4">第一部分</a><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1je41147Ma?p=3">第二部分</a></p>
+<h3 id="更换和安装主题"><a href="#更换和安装主题" class="headerlink" title="更换和安装主题"></a>更换和安装主题</h3><p><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/22735619">文字教程</a><br><a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1je41147Ma?p=7">视频教程</a></p>
+<h3 id="网站更新"><a href="#网站更新" class="headerlink" title="网站更新"></a>网站更新</h3><p>部署完成后若需要更新文件，使用以下命令上传文件到github后，重新访问网站即可看到更新的内容</p>
+<pre class=" language-bash"><code class="language-bash">$ hexo g -d
+</code></pre>
+<h3 id="matery主题说明"><a href="#matery主题说明" class="headerlink" title="matery主题说明"></a>matery主题说明</h3><p><a target="_blank" rel="noopener" href="https://blog.csdn.net/jspnetcn/article/details/104111651">基于Hexo的matery主题搭建博客并优化</a></p>
 
                 
             </div>
@@ -406,7 +416,7 @@
                     </i>
                 </span>
                 <span class="reprint-info">
-                    <a href="https://yanghai001.github.io/2021/0405undefined.html">https://yanghai001.github.io/2021/0405undefined.html</a>
+                    <a href="https://yanghai001.github.io/2021/040537708.html">https://yanghai001.github.io/2021/040537708.html</a>
                 </span>
             </div>
             <div class="reprint__notice">
@@ -443,7 +453,11 @@
                 <div class="post-meta__tag-list" style="display: inline-block;">
                     
                         <div class="article-tag">
-                            <span class="chip bg-color">无标签</span>
+                            
+                                <a href="/tags/hexo-blog-github-nodejs/">
+                                    <span class="chip bg-color">-hexo -blog -github -nodejs</span>
+                                </a>
+                            
                         </div>
                     
                 </div>
@@ -487,9 +501,10 @@
 <article id="prenext-posts" class="prev-next articles">
     <div class="row article-row">
         
-        <div class="article col s12 m6" data-aos="fade-up">
+        <div class="article col s12 m6" data-aos="fade-up" data-aos="fade-up">
             <div class="article-badge left-badge text-color">
-                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+                <i class="far fa-dot-circle"></i>&nbsp;本篇
+            </div>
             <div class="card">
                 <a href="/2021/040537708.html">
                     <div class="card-image">
@@ -507,9 +522,9 @@
                         
                     </div>
                     <div class="publish-info">
-                        <span class="publish-date">
-                            <i class="far fa-clock fa-fw icon-date"></i>2021-04-05
-                        </span>
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-04-05
+                            </span>
                         <span class="publish-author">
                             
                             <i class="fas fa-bookmark fa-fw icon-category"></i>
@@ -522,6 +537,7 @@
                         </span>
                     </div>
                 </div>
+
                 
                 <div class="card-action article-tags">
                     
@@ -537,7 +553,7 @@
         
         <div class="article col s12 m6" data-aos="fade-up">
             <div class="article-badge right-badge text-color">
-                本篇&nbsp;<i class="far fa-dot-circle"></i>
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
             </div>
             <div class="card">
                 <a href="/2021/0405undefined.html">
@@ -567,7 +583,6 @@
                         </span>
                     </div>
                 </div>
-
                 
             </div>
         </div>
