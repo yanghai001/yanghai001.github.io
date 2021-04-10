@@ -6,7 +6,7 @@
   <link href="https://yanghai001.github.io/atom.xml" rel="self"/>
   
   <link href="https://yanghai001.github.io/"/>
-  <updated>2021-04-06T04:02:00.447Z</updated>
+  <updated>2021-04-10T18:07:24.299Z</updated>
   <id>https://yanghai001.github.io/</id>
   
   <author>
@@ -15,6 +15,37 @@
   </author>
   
   <generator uri="https://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>笔记：django开发blog系统</title>
+    <link href="https://yanghai001.github.io/2021/041037708.html"/>
+    <id>https://yanghai001.github.io/2021/041037708.html</id>
+    <published>2021-04-10T15:11:20.772Z</published>
+    <updated>2021-04-10T18:07:24.299Z</updated>
+    
+    
+      
+      
+        
+        
+    <summary type="html">&lt;p&gt;最近在python学习网学习黑马程序员的&lt;a href=&quot;https://www.py.cn/course/1091.html&quot;&gt;从0开发一个Django博客系统&lt;/a&gt;&lt;br&gt;，以下是学习过程中的笔记，以便后续复习。&lt;/p&gt;
+&lt;hr&gt;
+&lt;h3</summary>
+        
+      
+    
+    
+    
+    <category term="django" scheme="https://yanghai001.github.io/categories/django/"/>
+    
+    
+    <category term="blog" scheme="https://yanghai001.github.io/tags/blog/"/>
+    
+    <category term="github" scheme="https://yanghai001.github.io/tags/github/"/>
+    
+    <category term="django" scheme="https://yanghai001.github.io/tags/django/"/>
+    
+  </entry>
   
   <entry>
     <title>笔记：站点部署记录</title>
