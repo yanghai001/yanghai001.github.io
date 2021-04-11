@@ -565,7 +565,29 @@ git config --global user.name &quot;Your Name&quot;
 </code></pre>
 <p>稍等一会，即可在远程仓库中看到工程文件，整个工程创建完成。</p>
 <h3 id="二、相关配置"><a href="#二、相关配置" class="headerlink" title="二、相关配置"></a>二、相关配置</h3><h4 id="1-pycharm配置解释器"><a href="#1-pycharm配置解释器" class="headerlink" title="1.pycharm配置解释器"></a>1.pycharm配置解释器</h4><p>用pycharm打开blog工程文件夹,并设置python解释器（选择blog_env/scripts中的python.exe)</p>
-<h4 id="2-django配置日志器"><a href="#2-django配置日志器" class="headerlink" title="2.django配置日志器"></a>2.django配置日志器</h4>
+<h4 id="2-django配置日志器"><a href="#2-django配置日志器" class="headerlink" title="2.django配置日志器"></a>2.django配置日志器</h4><p>参照教程配置日志器：<a target="_blank" rel="noopener" href="https://blog.csdn.net/JunChow520/article/details/108748758">Django日志配置</a></p>
+<h3 id="三、注册功能"><a href="#三、注册功能" class="headerlink" title="三、注册功能"></a>三、注册功能</h3><h4 id="1-注册用户模块应用"><a href="#1-注册用户模块应用" class="headerlink" title="1.注册用户模块应用"></a>1.注册用户模块应用</h4><p>cd到虚拟环境文件夹并激活虚拟环境，然后cd到blog工程文件夹(manage.py文件所在目录) ,然后使用以下命令创建users模块app </p>
+<pre><code>python manage.py startapp users
+</code></pre>
+<p>打开settings.py文件，在INSTALLED_APPS列表中加入’users.apps.UsersConfig’  </p>
+<h4 id="2-创建并配置templates模板路径"><a href="#2-创建并配置templates模板路径" class="headerlink" title="2.创建并配置templates模板路径"></a>2.创建并配置templates模板路径</h4><p>在manage.py所在文件夹中创建一个文件夹，命名为templates<br>打开settings.py文件，在TEMPLATES的’DIRS’列表中加入’os.path.join(BASE_DIR,’templates’)’,结果如下：  </p>
+<pre><code>TEMPLATES = [
+    &#123;
+        &#39;BACKEND&#39;: &#39;django.template.backends.django.DjangoTemplates&#39;,
+        &#39;DIRS&#39;: [os.path.join(BASE_DIR,&#39;templates&#39;)], #在此行加入
+        &#39;APP_DIRS&#39;: True,
+        &#39;OPTIONS&#39;: &#123;
+            &#39;context_processors&#39;: [
+                &#39;django.template.context_processors.debug&#39;,
+                &#39;django.template.context_processors.request&#39;,
+                &#39;django.contrib.auth.context_processors.auth&#39;,
+                &#39;django.contrib.messages.context_processors.messages&#39;,
+            ],
+        &#125;,
+    &#125;,
+]
+</code></pre>
+
                 
             </div>
             <hr/>
