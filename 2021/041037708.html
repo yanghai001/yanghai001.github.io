@@ -475,7 +475,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-04-12
+                    2021-04-13
                 </div>
                 
 
@@ -587,7 +587,45 @@ git config --global user.name &quot;Your Name&quot;
     &#125;,
 ]
 </code></pre>
-<h4 id="3-定义用户注册视图"><a href="#3-定义用户注册视图" class="headerlink" title="3.定义用户注册视图"></a>3.定义用户注册视图</h4><p>把配套资料static文件夹中的register.html文件复制到templates文件夹中，</p>
+<h4 id="3-定义用户注册视图"><a href="#3-定义用户注册视图" class="headerlink" title="3.定义用户注册视图"></a>3.定义用户注册视图</h4><p>把配套资料static文件夹中的register.html文件复制到templates文件夹中<br>打开users app文件夹中views.py文件，添加以下代码，定义一个名为RegisterView的视图，继承django的View类  </p>
+<pre><code>from django.shortcuts import render
+from django.views import View
+
+class RegisterView(View):
+    def get(self,request):
+        return  render(request,&#39;register.html&#39;)
+</code></pre>
+<h4 id="4-定义app子路由"><a href="#4-定义app子路由" class="headerlink" title="4.定义app子路由"></a>4.定义app子路由</h4><p>在users app中新建urls.py文件，作为app的子路由<br>打开新建的urls.py文件，添加以下代码：  </p>
+<pre><code>from django.urls import path
+from users.views import RegisterView
+
+urlpatterns = [
+    path(&#39;register/&#39;, RegisterView.as_view(),name=&#39;register&#39;),
+]
+</code></pre>
+<p>name=’register’是定义了一个别名<br>打开blog工程中的urls.py文件，从django.urls导入include方法，  </p>
+<pre><code>from django.urls import include
+</code></pre>
+<p>然后在urlpatterns中增加一行路由引导参数，并定义命名空间为跟app名字一样的’users’：  </p>
+<pre><code>path(&#39;&#39;,include((&#39;users.urls&#39;,&#39;users&#39;),namespace=&#39;users&#39;))
+</code></pre>
+<h4 id="5-修改register-html模板中静态文件路径"><a href="#5-修改register-html模板中静态文件路径" class="headerlink" title="5.修改register.html模板中静态文件路径"></a>5.修改register.html模板中静态文件路径</h4><p>register.html文件中目前采用的是相对路径来访问本地的css,js,图片等资源，需要修改一下保证能正常访问<br>先在header中插入以下代码加载static路径，好处是static文件夹发生了位置变更时只有在setting.py文件中重新修改static的路径设置即可  </p>
+<pre><code>&#123;% load static %&#125;
+</code></pre>
+<p>然后修改对于的文件路径：  </p>
+<pre><code>&lt;!-- 引入bootstrap的css文件 --&gt;
+&lt;link rel=&quot;stylesheet&quot; href=&quot;&#123;% static 'bootstrap/css/bootstrap.min.css' %&#125;&quot;&gt;
+&lt;!-- 引入vuejs --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;&#123;% static 'js/vue-2.5.16.js' %&#125;&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;&#123;% static 'js/axios-0.18.0.min.js' %&#125;&quot;&gt;&lt;/script&gt;
+&lt;!-- 读入图片验证码图片 --&gt;
+&lt;img src=&quot;&#123;% static 'img/image_code.png' %&#125;&quot; @click=&quot;generate_image_code&quot; alt=&quot;&quot; style=&quot;width: 110px;height: 40px;&quot;&gt;
+&lt;!-- 引入js --&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;&#123;% static 'js/host.js' %&#125;&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;&#123;% static 'js/common.js' %&#125;&quot;&gt;&lt;/script&gt;
+&lt;script type=&quot;text/javascript&quot; src=&quot;&#123;% static 'js/register.js' %&#125;&quot;&gt;&lt;/script&gt;
+</code></pre>
+<p>然后重新启动server服务，在浏览器中访问127.0.0.1：8000，可以看到注册页面正常了</p>
 
                 
             </div>
