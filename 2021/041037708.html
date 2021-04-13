@@ -595,7 +595,7 @@ class RegisterView(View):
     def get(self,request):
         return  render(request,&#39;register.html&#39;)
 </code></pre>
-<h4 id="4-定义app子路由"><a href="#4-定义app子路由" class="headerlink" title="4.定义app子路由"></a>4.定义app子路由</h4><p>在users app中新建urls.py文件，作为app的子路由<br>打开新建的urls.py文件，添加以下代码：  </p>
+<h4 id="4-定义app子路由和配置主路由"><a href="#4-定义app子路由和配置主路由" class="headerlink" title="4.定义app子路由和配置主路由"></a>4.定义app子路由和配置主路由</h4><p>在users app中新建urls.py文件，作为app的子路由<br>打开新建的urls.py文件，添加以下代码：  </p>
 <pre><code>from django.urls import path
 from users.views import RegisterView
 
@@ -625,7 +625,86 @@ urlpatterns = [
 &lt;script type=&quot;text/javascript&quot; src=&quot;&#123;% static 'js/common.js' %&#125;&quot;&gt;&lt;/script&gt;
 &lt;script type=&quot;text/javascript&quot; src=&quot;&#123;% static 'js/register.js' %&#125;&quot;&gt;&lt;/script&gt;
 </code></pre>
-<p>然后重新启动server服务，在浏览器中访问127.0.0.1：8000，可以看到注册页面正常了</p>
+<p>然后重新启动server服务，在浏览器中访问127.0.0.1：8000，可以看到注册页面正常了  </p>
+<h3 id="四、自定义用户模型类"><a href="#四、自定义用户模型类" class="headerlink" title="四、自定义用户模型类"></a>四、自定义用户模型类</h3><h4 id="1-Django默认用户认证系统"><a href="#1-Django默认用户认证系统" class="headerlink" title="1.Django默认用户认证系统"></a>1.Django默认用户认证系统</h4><ul>
+<li>Django自带用户认证系统<br>  它处理用户账号、组、权限以及基于cookie的用户会话。</li>
+<li>Django认证系统位置<br>  django.contrib.auth包含认证框架的核心和默认的模型。</li>
+<li>Django认证系统同时处理认证和授权<br>  认证：验证一个用户是否它声称的那个人，可用于账号登录。<br>  授权：授权决定一个通过了认证的用户被允许做什么。</li>
+<li>Django认证系统包含的内容<br>  用户：用户模型类、用户认证。<br>  权限：标识一个用户是否可以做一个特定的任务，MIS系统常用到。<br>  组：对多个具有相同权限的用户进行统一管理，MIS系统常用到。<br>  密码：一个可配置的密码哈希系统，设置密码、密码校验。  </li>
+</ul>
+<h4 id="2-Django默认用户模型类"><a href="#2-Django默认用户模型类" class="headerlink" title="2.Django默认用户模型类"></a>2.Django默认用户模型类</h4><ul>
+<li>Django认证系统中提供了用户模型类User保存用户的数据。  <ul>
+<li>User对象是认证系统的核心。  </li>
+</ul>
+</li>
+<li>Django认证系统用户模型类位置:  <ul>
+<li>django.contrib.auth.models.User</li>
+</ul>
+</li>
+</ul>
+<pre><code>class User(AbstractUser):  
+&quot;&quot;&quot;
+User within the Django authentication system are represented by this model.
+Username and Password ard required, other fields are optinal
+&quot;&quot;&quot;
+    class Meta(AbstractUser.Meta):
+        swappable = &#39;AUTH_USER_MODEL&#39;
+                  
+</code></pre>
+<ul>
+<li>父类AbstractUser介绍  <ul>
+<li>User对象基本属性<br>  创建用户必选：username、password<br>  创建用户可选：email、first_name、last_name、last_login、date_joined、is_active 、is_staff、is_superuse<br>  判断用户是否通过认证：is_authenticated<br>  USERNAME_FIELD:可以修改用户名认证字段  </li>
+<li>创建用户的方法<br>  user = User.objects.create_user(username, password, **extra_fields)</li>
+<li>用户认证的方法<br>  from django.contrib.auth import authenticate<br>  user = authenticate(username=username, password=password, **kwargs)</li>
+<li>处理密码的方法<br>  设置密码：set_password(raw_password)<br>  校验密码：check_password(raw_password)  </li>
+</ul>
+</li>
+</ul>
+<h4 id="3-自定义用户模型"><a href="#3-自定义用户模型" class="headerlink" title="3. 自定义用户模型"></a>3. 自定义用户模型</h4><ul>
+<li>为什么要自定义用户模型类？<ul>
+<li>观察注册界面会发现，个人博客注册页面中必须有手机号，而且在登录页面中也使用手机号进行认证。此外个人中心页面中有个人头像和个人简介字段。</li>
+<li>但是Django默认用户模型类中没有这些字段，所以要自定义用户模型类。</li>
+</ul>
+</li>
+<li>如何自定义用户模型类？<ul>
+<li>继承自AbstractUser（可通过阅读Django默认用户模型类的源码得知） 。</li>
+<li>新增手机号字段，头像字段和简介字段。 </li>
+</ul>
+</li>
+</ul>
+<p>打开users应用下的models.py文件，并在其中创建User类，继承自AbstractUser类：</p>
+<pre><code>from django.db import models
+from django.contrib.auth.models import AbstractUser
+
+# 用户信息
+class User(AbstractUser):
+
+    # 电话号码字段
+    # unique 为唯一性字段
+    mobile = models.CharField(max_length=20, unique=True,blank=True)
+
+    # 头像
+    # upload_to为保存到响应的子目录中
+    avatar = models.ImageField(upload_to=&#39;avatar/%Y%m%d/&#39;, blank=True)
+
+    # 个人简介
+    user_desc = models.TextField(max_length=500, blank=True)
+
+    # 修改认证的字段
+    USERNAME_FIELD = &#39;mobile&#39;
+
+    #创建超级管理员的需要必须输入的字段
+    REQUIRED_FIELDS = [&#39;username&#39;,&#39;email&#39;]
+
+    # 内部类 class Meta 用于给 model 定义元数据
+    class Meta:
+        db_table=&#39;tb_user&#39;              #修改默认的表名
+        verbose_name=&#39;用户信息&#39;         # Admin后台显示
+        verbose_name_plural=verbose_name # Admin后台显示
+
+    def __str__(self):
+        return self.mobile
+</code></pre>
 
                 
             </div>
