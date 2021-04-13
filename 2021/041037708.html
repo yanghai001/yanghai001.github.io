@@ -475,7 +475,7 @@
                 
                 <div class="post-date info-break-policy">
                     <i class="far fa-calendar-check fa-fw"></i>更新日期:&nbsp;&nbsp;
-                    2021-04-13
+                    2021-04-14
                 </div>
                 
 
@@ -566,11 +566,11 @@ git config --global user.name &quot;Your Name&quot;
 <p>稍等一会，即可在远程仓库中看到工程文件，整个工程创建完成。</p>
 <h3 id="二、相关配置"><a href="#二、相关配置" class="headerlink" title="二、相关配置"></a>二、相关配置</h3><h4 id="1-pycharm配置解释器"><a href="#1-pycharm配置解释器" class="headerlink" title="1.pycharm配置解释器"></a>1.pycharm配置解释器</h4><p>用pycharm打开blog工程文件夹,并设置python解释器（选择blog_env/scripts中的python.exe)</p>
 <h4 id="2-django配置日志器"><a href="#2-django配置日志器" class="headerlink" title="2.django配置日志器"></a>2.django配置日志器</h4><p>参照教程配置日志器：<a target="_blank" rel="noopener" href="https://blog.csdn.net/JunChow520/article/details/108748758">Django日志配置</a></p>
-<h3 id="三、注册功能"><a href="#三、注册功能" class="headerlink" title="三、注册功能"></a>三、注册功能</h3><h4 id="1-注册用户模块应用"><a href="#1-注册用户模块应用" class="headerlink" title="1.注册用户模块应用"></a>1.注册用户模块应用</h4><p>cd到虚拟环境文件夹并激活虚拟环境，然后cd到blog工程文件夹(manage.py文件所在目录) ,然后使用以下命令创建users模块app </p>
+<h3 id="三、注册功能"><a href="#三、注册功能" class="headerlink" title="三、注册功能"></a>三、注册功能</h3><h4 id="1-注册页面展示"><a href="#1-注册页面展示" class="headerlink" title="1.注册页面展示"></a>1.注册页面展示</h4><h5 id="1-注册用户模块应用"><a href="#1-注册用户模块应用" class="headerlink" title="1.注册用户模块应用"></a>1.注册用户模块应用</h5><p>cd到虚拟环境文件夹并激活虚拟环境，然后cd到blog工程文件夹(manage.py文件所在目录) ,然后使用以下命令创建users模块app </p>
 <pre><code>python manage.py startapp users
 </code></pre>
 <p>打开settings.py文件，在INSTALLED_APPS列表中加入’users.apps.UsersConfig’  </p>
-<h4 id="2-创建并配置templates模板路径"><a href="#2-创建并配置templates模板路径" class="headerlink" title="2.创建并配置templates模板路径"></a>2.创建并配置templates模板路径</h4><p>在manage.py所在文件夹中创建一个文件夹，命名为templates<br>打开settings.py文件，在TEMPLATES的’DIRS’列表中加入’os.path.join(BASE_DIR,’templates’)’,结果如下：  </p>
+<h5 id="2-创建并配置templates模板路径"><a href="#2-创建并配置templates模板路径" class="headerlink" title="2.创建并配置templates模板路径"></a>2.创建并配置templates模板路径</h5><p>在manage.py所在文件夹中创建一个文件夹，命名为templates<br>打开settings.py文件，在TEMPLATES的’DIRS’列表中加入’os.path.join(BASE_DIR,’templates’)’,结果如下：  </p>
 <pre><code>TEMPLATES = [
     &#123;
         &#39;BACKEND&#39;: &#39;django.template.backends.django.DjangoTemplates&#39;,
@@ -587,7 +587,7 @@ git config --global user.name &quot;Your Name&quot;
     &#125;,
 ]
 </code></pre>
-<h4 id="3-定义用户注册视图"><a href="#3-定义用户注册视图" class="headerlink" title="3.定义用户注册视图"></a>3.定义用户注册视图</h4><p>把配套资料static文件夹中的register.html文件复制到templates文件夹中<br>打开users app文件夹中views.py文件，添加以下代码，定义一个名为RegisterView的视图，继承django的View类  </p>
+<h5 id="3-定义用户注册视图"><a href="#3-定义用户注册视图" class="headerlink" title="3.定义用户注册视图"></a>3.定义用户注册视图</h5><p>把配套资料static文件夹中的register.html文件复制到templates文件夹中<br>打开users app文件夹中views.py文件，添加以下代码，定义一个名为RegisterView的视图，继承django的View类  </p>
 <pre><code>from django.shortcuts import render
 from django.views import View
 
@@ -595,7 +595,7 @@ class RegisterView(View):
     def get(self,request):
         return  render(request,&#39;register.html&#39;)
 </code></pre>
-<h4 id="4-定义app子路由和配置主路由"><a href="#4-定义app子路由和配置主路由" class="headerlink" title="4.定义app子路由和配置主路由"></a>4.定义app子路由和配置主路由</h4><p>在users app中新建urls.py文件，作为app的子路由<br>打开新建的urls.py文件，添加以下代码：  </p>
+<h5 id="4-定义app子路由和配置主路由"><a href="#4-定义app子路由和配置主路由" class="headerlink" title="4.定义app子路由和配置主路由"></a>4.定义app子路由和配置主路由</h5><p>在users app中新建urls.py文件，作为app的子路由<br>打开新建的urls.py文件，添加以下代码：  </p>
 <pre><code>from django.urls import path
 from users.views import RegisterView
 
@@ -609,7 +609,7 @@ urlpatterns = [
 <p>然后在urlpatterns中增加一行路由引导参数，并定义命名空间为跟app名字一样的’users’：  </p>
 <pre><code>path(&#39;&#39;,include((&#39;users.urls&#39;,&#39;users&#39;),namespace=&#39;users&#39;))
 </code></pre>
-<h4 id="5-修改register-html模板中静态文件路径"><a href="#5-修改register-html模板中静态文件路径" class="headerlink" title="5.修改register.html模板中静态文件路径"></a>5.修改register.html模板中静态文件路径</h4><p>register.html文件中目前采用的是相对路径来访问本地的css,js,图片等资源，需要修改一下保证能正常访问<br>先在header中插入以下代码加载static路径，好处是static文件夹发生了位置变更时只有在setting.py文件中重新修改static的路径设置即可  </p>
+<h5 id="5-修改register-html模板中静态文件路径"><a href="#5-修改register-html模板中静态文件路径" class="headerlink" title="5.修改register.html模板中静态文件路径"></a>5.修改register.html模板中静态文件路径</h5><p>register.html文件中目前采用的是相对路径来访问本地的css,js,图片等资源，需要修改一下保证能正常访问<br>先在header中插入以下代码加载static路径，好处是static文件夹发生了位置变更时只有在setting.py文件中重新修改static的路径设置即可  </p>
 <pre><code>&#123;% load static %&#125;
 </code></pre>
 <p>然后修改对于的文件路径：  </p>
@@ -626,13 +626,13 @@ urlpatterns = [
 &lt;script type=&quot;text/javascript&quot; src=&quot;&#123;% static 'js/register.js' %&#125;&quot;&gt;&lt;/script&gt;
 </code></pre>
 <p>然后重新启动server服务，在浏览器中访问127.0.0.1：8000，可以看到注册页面正常了  </p>
-<h3 id="四、自定义用户模型类"><a href="#四、自定义用户模型类" class="headerlink" title="四、自定义用户模型类"></a>四、自定义用户模型类</h3><h4 id="1-Django默认用户认证系统"><a href="#1-Django默认用户认证系统" class="headerlink" title="1.Django默认用户认证系统"></a>1.Django默认用户认证系统</h4><ul>
+<h4 id="2-自定义用户模型类"><a href="#2-自定义用户模型类" class="headerlink" title="2.自定义用户模型类"></a>2.自定义用户模型类</h4><h5 id="1-Django默认用户认证系统"><a href="#1-Django默认用户认证系统" class="headerlink" title="1.Django默认用户认证系统"></a>1.Django默认用户认证系统</h5><ul>
 <li>Django自带用户认证系统<br>  它处理用户账号、组、权限以及基于cookie的用户会话。</li>
 <li>Django认证系统位置<br>  django.contrib.auth包含认证框架的核心和默认的模型。</li>
 <li>Django认证系统同时处理认证和授权<br>  认证：验证一个用户是否它声称的那个人，可用于账号登录。<br>  授权：授权决定一个通过了认证的用户被允许做什么。</li>
 <li>Django认证系统包含的内容<br>  用户：用户模型类、用户认证。<br>  权限：标识一个用户是否可以做一个特定的任务，MIS系统常用到。<br>  组：对多个具有相同权限的用户进行统一管理，MIS系统常用到。<br>  密码：一个可配置的密码哈希系统，设置密码、密码校验。  </li>
 </ul>
-<h4 id="2-Django默认用户模型类"><a href="#2-Django默认用户模型类" class="headerlink" title="2.Django默认用户模型类"></a>2.Django默认用户模型类</h4><ul>
+<h5 id="2-Django默认用户模型类"><a href="#2-Django默认用户模型类" class="headerlink" title="2.Django默认用户模型类"></a>2.Django默认用户模型类</h5><ul>
 <li>Django认证系统中提供了用户模型类User保存用户的数据。  <ul>
 <li>User对象是认证系统的核心。  </li>
 </ul>
@@ -660,7 +660,7 @@ Username and Password ard required, other fields are optinal
 </ul>
 </li>
 </ul>
-<h4 id="3-自定义用户模型"><a href="#3-自定义用户模型" class="headerlink" title="3. 自定义用户模型"></a>3. 自定义用户模型</h4><ul>
+<h5 id="3-自定义用户模型"><a href="#3-自定义用户模型" class="headerlink" title="3. 自定义用户模型"></a>3. 自定义用户模型</h5><ul>
 <li>为什么要自定义用户模型类？<ul>
 <li>观察注册界面会发现，个人博客注册页面中必须有手机号，而且在登录页面中也使用手机号进行认证。此外个人中心页面中有个人头像和个人简介字段。</li>
 <li>但是Django默认用户模型类中没有这些字段，所以要自定义用户模型类。</li>
@@ -681,7 +681,7 @@ class User(AbstractUser):
 
     # 电话号码字段
     # unique 为唯一性字段
-    mobile = models.CharField(max_length=20, unique=True,blank=True)
+    mobile = models.CharField(max_length=20, unique=True,blank=False)
 
     # 头像
     # upload_to为保存到响应的子目录中
@@ -689,12 +689,6 @@ class User(AbstractUser):
 
     # 个人简介
     user_desc = models.TextField(max_length=500, blank=True)
-
-    # 修改认证的字段
-    USERNAME_FIELD = &#39;mobile&#39;
-
-    #创建超级管理员的需要必须输入的字段
-    REQUIRED_FIELDS = [&#39;username&#39;,&#39;email&#39;]
 
     # 内部类 class Meta 用于给 model 定义元数据
     class Meta:
@@ -704,6 +698,30 @@ class User(AbstractUser):
 
     def __str__(self):
         return self.mobile
+        
+</code></pre>
+<p>打开settings.py文件，在最后插入以下内容，替换系统默认的user类，具体可参考<a target="_blank" rel="noopener" href="https://docs.djangoproject.com/en/2.2/topics/auth/customizing/#auth-custom-user">django文档</a> ：</p>
+<pre><code># 替换系统的user模型类，改为我们自定义的user模型
+# 配置信息为 &#39;子应用.模型类名&#39;
+AUTH_USER_MODEL = &#39;users.User&#39;
+</code></pre>
+<h5 id="4-安装Pillow库"><a href="#4-安装Pillow库" class="headerlink" title="4.安装Pillow库"></a>4.安装Pillow库</h5><p>如果这时我们启动server，会出现以下错误：  </p>
+<pre><code>ERRORS:  
+users.User.avatar: (fields.E210) Cannot use ImageField because Pillow is not installed.  
+HINT: Get Pillow at https://pypi.org/project/Pillow/ or run command &quot;python -m pip install Pillow&quot;
+</code></pre>
+<p>这是因为我们定义user模型类时用到了Imagefiled，继承自pillow库，所以需要使用以下命令安装pillow库（记得切换到虚拟环境状态）：  </p>
+<pre><code>python -m pip install Pillow
+</code></pre>
+<h5 id="5-迁移用户模型类"><a href="#5-迁移用户模型类" class="headerlink" title="5.迁移用户模型类"></a>5.迁移用户模型类</h5><ul>
+<li>创建迁移文件（务必在设置AUTH_USER_MODEL配置后）</li>
+</ul>
+<pre><code>python manage.py makemigrations
+</code></pre>
+<ul>
+<li>执行迁移</li>
+</ul>
+<pre><code>python manage.py migrate
 </code></pre>
 
                 
