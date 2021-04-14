@@ -566,6 +566,37 @@ git config --global user.name &quot;Your Name&quot;
 <p>稍等一会，即可在远程仓库中看到工程文件，整个工程创建完成。</p>
 <h3 id="二、相关配置"><a href="#二、相关配置" class="headerlink" title="二、相关配置"></a>二、相关配置</h3><h4 id="1-pycharm配置解释器"><a href="#1-pycharm配置解释器" class="headerlink" title="1.pycharm配置解释器"></a>1.pycharm配置解释器</h4><p>用pycharm打开blog工程文件夹,并设置python解释器（选择blog_env/scripts中的python.exe)</p>
 <h4 id="2-django配置日志器"><a href="#2-django配置日志器" class="headerlink" title="2.django配置日志器"></a>2.django配置日志器</h4><p>参照教程配置日志器：<a target="_blank" rel="noopener" href="https://blog.csdn.net/JunChow520/article/details/108748758">Django日志配置</a></p>
+<h4 id="3-redis数据库配置"><a href="#3-redis数据库配置" class="headerlink" title="3.redis数据库配置"></a>3.redis数据库配置</h4><ul>
+<li><p>安装django-redis库（<a target="_blank" rel="noopener" href="https://django-redis-chs.readthedocs.io/zh_CN/latest/">库的相关文档</a> ）<br>先进入虚拟环境，然后使用以下命令安装django-redis库：</p>
+<pre><code>  pip3 install django-redis
+</code></pre>
+</li>
+<li><p>配置redis数据库<br>打开settings.py文件，插入以下配置内容：</p>
+</li>
+</ul>
+<pre><code>CACHES = &#123;
+    &quot;default&quot;: &#123; # 默认
+        &quot;BACKEND&quot;: &quot;django_redis.cache.RedisCache&quot;,
+        &quot;LOCATION&quot;: &quot;redis://127.0.0.1:6379/0&quot;,
+        &quot;OPTIONS&quot;: &#123;
+            &quot;CLIENT_CLASS&quot;: &quot;django_redis.client.DefaultClient&quot;,
+        &#125;
+    &#125;,
+    &quot;session&quot;: &#123; # session
+        &quot;BACKEND&quot;: &quot;django_redis.cache.RedisCache&quot;,
+        &quot;LOCATION&quot;: &quot;redis://127.0.0.1:6379/1&quot;,
+        &quot;OPTIONS&quot;: &#123;
+            &quot;CLIENT_CLASS&quot;: &quot;django_redis.client.DefaultClient&quot;,
+        &#125;
+    &#125;,
+&#125;
+SESSION_ENGINE = &quot;django.contrib.sessions.backends.cache&quot;
+SESSION_CACHE_ALIAS = &quot;session&quot;
+
+
+  
+</code></pre>
+<p>   相关解释如下：<br>        default：默认的Redis配置项，采用0号Redis库。<br>        session：状态保持的Redis配置项，采用1号Redis库。<br>        SESSION_ENGINE：修改session存储机制使用Redis保存。<br>        SESSION_CACHE_ALIAS：使用名为”session”的Redis配置项存储session数据。<br>    配置完成后：运行程序，测试结果。</p>
 <h3 id="三、注册功能"><a href="#三、注册功能" class="headerlink" title="三、注册功能"></a>三、注册功能</h3><h4 id="1-注册页面展示"><a href="#1-注册页面展示" class="headerlink" title="1.注册页面展示"></a>1.注册页面展示</h4><h5 id="1-注册用户模块应用"><a href="#1-注册用户模块应用" class="headerlink" title="1.注册用户模块应用"></a>1.注册用户模块应用</h5><p>cd到虚拟环境文件夹并激活虚拟环境，然后cd到blog工程文件夹(manage.py文件所在目录) ,然后使用以下命令创建users模块app </p>
 <pre><code>python manage.py startapp users
 </code></pre>
@@ -723,7 +754,7 @@ HINT: Get Pillow at https://pypi.org/project/Pillow/ or run command &quot;python
 </ul>
 <pre><code>python manage.py migrate
 </code></pre>
-
+<h4 id="4-实现图片验证码"><a href="#4-实现图片验证码" class="headerlink" title="4.实现图片验证码"></a>4.实现图片验证码</h4>
                 
             </div>
             <hr/>
